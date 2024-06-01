@@ -3,7 +3,7 @@ import '/core/error/exceptions.dart';
 import '/features/auth/data/datasources/auth_remote_data_source.dart';
 import '/features/auth/domain/entities/user.dart';
 import '/features/auth/domain/repositories/auth_repository.dart';
-import '/core/models/either.dart';  // Ensure you have either.dart correctly set up for Either type
+import '/core/models/either.dart';  
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;

@@ -92,6 +92,7 @@ class ArticleItem extends StatelessWidget {
                     ),
                     padding: const EdgeInsets.all(8.0),
                     child: Icon(
+                      // Show favorite icon and background only when the user is logged in
                       isLoggedIn && article.isFavorite
                           ? Icons.favorite
                           : Icons.favorite_border,

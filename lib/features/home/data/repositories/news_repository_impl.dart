@@ -12,12 +12,9 @@ class NewsRepositoryImpl implements NewsRepository {
   Future<Result<List<Article>>> getNews() async {
     try {
       final response = await _remoteDataSource.fetchNews();
+      // Using tear offs in map
       final articles = response.results
-          .map((model) => Article(
-              id: model.articleId,
-              title: model.title,
-              description: model.description,
-              isFavorite: model.isFavorite))
+          .map(Article.fromModel)
           .toList();
       return Result(data: articles);
     } catch (e) {

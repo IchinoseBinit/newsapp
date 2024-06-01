@@ -65,12 +65,10 @@ final registerUseCaseProvider = Provider<Register>((ref) {
 class AuthNotifier extends StateNotifier<AuthState> {
   final Login login;
   final Register register;
-  final AppRouter appRouter;
 
   AuthNotifier({
     required this.login,
     required this.register,
-    required this.appRouter,
   }) : super(AuthInitial());
 
   Future<void> checkAuthState(BuildContext context) async {
@@ -140,15 +138,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
 final authNotifierProvider =
     StateNotifierProvider<AuthNotifier, AuthState>((ref) {
-  final appRouter = ref.read(appRouterProvider);
 
   return AuthNotifier(
     login: ref.read(loginUseCaseProvider),
     register: ref.read(registerUseCaseProvider),
-    appRouter: appRouter,
   );
-});
-
-final appRouterProvider = Provider<AppRouter>((ref) {
-  return AppRouter();
 });

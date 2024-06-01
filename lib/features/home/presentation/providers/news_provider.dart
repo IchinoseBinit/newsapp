@@ -18,7 +18,9 @@ class NewsNotifier extends StateNotifier<Result<List<Article>>> {
   Box<List<String>>? _favoritesBox;
 
   Box<List<String>> get favoritesBox {
+    // Get the favorite box
     _favoritesBox ??= Hive.box(HiveConstants.boxKey);
+    // If its null, initialize it with the opened box
     return _favoritesBox!;
   }
 
@@ -30,6 +32,7 @@ class NewsNotifier extends StateNotifier<Result<List<Article>>> {
     if (result.isSuccess) {
       final List<Article> articles = result.data!;
       final authState = ref.read(authNotifierProvider);
+      // Only getting the favorites for the authenticated users
       if (authState is Authenticated) {
         final user = authState.user;
         final favoriteIds =
@@ -55,6 +58,7 @@ class NewsNotifier extends StateNotifier<Result<List<Article>>> {
       } else {
         favoriteIds.add(article.id);
       }
+      // Add the ids of the favorite news in the hive box with user id as key
       favoritesBox.put(user.id, favoriteIds);
       article.isFavorite = !article.isFavorite;
       state = Result(data: List<Article>.from(state.data!));

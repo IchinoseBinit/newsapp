@@ -10,6 +10,7 @@ enum ThemeModeType { light, dark }
 class ThemeNotifier extends StateNotifier<ThemeMode> {
   
   ThemeNotifier(super.initialThemeMode);
+  // Initialize the notifier with the theme from the hive
 
 
   void toggleTheme() async {
@@ -18,15 +19,11 @@ class ThemeNotifier extends StateNotifier<ThemeMode> {
     } else {
       state = ThemeMode.light;
     }
-
-
+    // Open the hive box and put the value of the theme for persistence
     final box = await Hive.openBox(HiveConstants.themeBoxKey);
     await box.put(HiveConstants.themeModeKey, state.index);
   }
 
-  void setThemeMode(ThemeMode mode) async {
-    state = mode;
-  }
 }
 
 final themeNotifierProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>(
@@ -37,6 +34,7 @@ final themeNotifierProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>(
 );
 
 // Define an initial theme mode provider
+// Used for passing the initial theme in the startup of the app
 final initialThemeModeProvider = Provider<ThemeMode>((ref) {
   throw UnimplementedError();
 });

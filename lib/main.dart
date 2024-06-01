@@ -12,14 +12,20 @@ import '/theme/themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Load the dot env file for api key for news
   await dotenv.load(fileName: "assets/env/.env");
+  // Initialize hive
   await Hive.initFlutter();
+  // Open the box for favorites
   await Hive.openBox<List<String>>(HiveConstants.boxKey);
 
+  // Open the box for theme
   final box = await Hive.openBox(HiveConstants.themeBoxKey);
   final themeModeIndex =
       box.get(HiveConstants.themeModeKey, defaultValue: ThemeMode.system.index);
+  // Get the theme index
   final themeMode = ThemeMode.values[themeModeIndex];
+  // Initialize the previously saved theme in the variable
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
@@ -27,6 +33,7 @@ void main() async {
     ProviderScope(
       overrides: [
         initialThemeModeProvider.overrideWithValue(themeMode),
+        // Override the default behavior of this provider with the saved theme state
       ],
       child: MyApp(),
     ),
